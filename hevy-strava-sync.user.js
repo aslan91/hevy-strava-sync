@@ -9,6 +9,7 @@
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @connect      api.hevyapp.com
+// @connect      www.strava.com
 // ==/UserScript==
 
 (function() {
@@ -48,9 +49,9 @@
         return new Promise((resolve, reject) => {
             GM_xmlhttpRequest({
                 method: 'GET',
-                url: 'https://api.hevyapp.com/v1/workouts?limit=5',
+                url: 'https://api.hevyapp.com/v1/workouts?page=1&pageSize=5',
                 headers: {
-                    'auth-token': apiKey,
+                    'api-key': apiKey,
                     'Accept': 'application/json'
                 },
                 onload: function(response) {
@@ -171,7 +172,7 @@
                         index: idx,
                         reps: set.reps || 0,
                         weight: set.weight_kg || 0,
-                        set_type: set.indicator === 'warmup' ? 'warmup' : 'normal'
+                        set_type: set.type || 'normal'
                     }))
                 };
             });
